@@ -78,7 +78,7 @@ class Transformer {
             return glm::make_mat4(elements);
 
         }
-        static glm::mat4 ironhide(float angle)  // Rotate Y
+        static glm::mat4 meganfox(float angle)  // Rotate Y
         {
             // Populating the rotation matrix:
             float elements[16];
@@ -130,7 +130,42 @@ class Transformer {
 
             return glm::make_mat4(elements);
         }
-        static glm::mat4 megatron(glm::vec3 vec3);   // Scaling
+        static glm::mat4 megatron(glm::vec3 vec3)   // Scaling
+        {
+            float x = vec3.x;
+            float y = vec3.y;
+            float z = vec.z;
+
+            // Example of what it looks like:
+            // X 0 0 0
+            // 0 Y 0 0
+            // 0 0 Z 0
+            // 0 0 0 1
+
+            // Populating the translation matrix:
+            float elements[16]; // First row
+            elements[0] = x;
+            elements[1] = 0;
+            elements[2] = 0;
+            elements[3] = 0;
+
+            elements[4] = 0; // Second row
+            elements[5] = y;
+            elements[6] = 0;
+            elements[7] = 0;
+
+            elements[8] = 0; // Third row
+            elements[9] = 0;
+            elements[10] = z;
+            elements[11] = 0;
+
+            elements[12] = 0; // Fourth row
+            elements[13] = 0;
+            elements[14] = 0;
+            elements[15] = 1;
+
+            return glm::make_mat4(elements);
+        }
 
     protected:
     private:
