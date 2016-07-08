@@ -58,7 +58,7 @@ class Transformer {
             elements[0] = 1;
             elements[1] = 0;
             elements[2] = 0;
-            elements[3] = x;
+            elements[3] = 0;
 
             elements[4] = 0; // Second row
             elements[5] = cosf(angle);
