@@ -15,27 +15,25 @@ Display::Display(int width, int height, const string& title) {
 
     SDL_Init(SDL_INIT_EVERYTHING);
 
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8); // 8 bits allocated, or 2^8 shades of RED
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8); // 2^8 = 256, good number if you don't know what to pick
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8); // since 256 shades is the limit of the human eye
-    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8); // Transparency
-    SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32); // Because there are possibly 32 bits of color above
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); // Allocate a separate block of memory
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8); // 8 bits alocados, ou 2^8 tons de vermelho possiveis
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8); // 2^8 = 256, um bom número já que 256 tons é +- o limite do olho humano
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8); // Transparência
+    SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32); // Tamanho do buffer = 32 porque acima se foi acumulado 32 bits do RGBA
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); // Alocando um bloco separado de memória para o double buffering
 
-    // GL Context Flow:
-    // SDL requests Window from Operating System
+    // Usando o SDL para solicitar uma janela do sistema operacional
     m_window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
 
-    // OpenGL contacts the GPU and gives it autonomy over the Window
-    // as if the Operating System outsourced the Window to the GPU
-    // Now we can draw in the Window using the GPU, through OpenGL
+    // OpenGL dá autonomia sobre a janela para a GPU, como se o OS tivesse feito uma terceirização da janela para a GPU
+    // Agora podemos desenhar na janela
     m_glContext = SDL_GL_CreateContext(m_window);
 
-    // GLEW searches the system for supported OpenGL windows
+    // GLEW procura no sistema janelas suportadas
     GLenum status = glewInit();
 
     if(status != GLEW_OK){
-        cerr << "GLEW failed to initialize" << endl;
+        cerr << "GLEW nao pode ser inicializado" << endl;
     }
 
     isClosed = false;
@@ -43,25 +41,22 @@ Display::Display(int width, int height, const string& title) {
 }
 
 Display::~Display() {
-    //Try to delete components in the reverse order they were created
-    // Imagine a layer analogy, to avoid bugs removing the upper and not the lower
+    // Tentar sempre deletar os elementos na ordem inversa que foram criados
+    // Tentar fazer uma analogia com camadas, para não ter erros removendo a externa e deixando a interna
     SDL_GL_DeleteContext(m_glContext);
     SDL_DestroyWindow(m_window);
     SDL_Quit();
 }
 
 void Display::SwapBuffers(){
-    // With 2 buffers, one allocates for the Window, the other for OpenGL
-    // While OpenGL draws in one space, the Window displays the other
-    // Then we Swap Buffers and display the just drawn while OpenGL draws on the other
-    // That way things are way more fluid.
-    // Something that's still being drawn is never shown.
+    // Com 2 buffers, um está alocado para a janela e o outro para o openGL
+    // Enquanto o openGL desenha em um, a janela mostra o outro.
+    // Assim, algo que está ainda sendo desenhado nunca é mostrado, deixando tudo mais fluido.
     SDL_GL_SwapWindow(m_window);
 
 
-    // Still, the Operating System is still sending Window Events,
-    // so we need to somehow warn it, otherwise it will think
-    // the program isn't responding, and generate a bug.
+    // Mas o OS ainda está mandando Window Events, então precisamos avisá-lo que a GPU está no controle
+    // Caso contrário ele pensará que o programa parou de responder, e tentar encerrá-lo
     SDL_Event e;
     while(SDL_PollEvent(&e)){
         if(e.type == SDL_QUIT)
@@ -69,13 +64,13 @@ void Display::SwapBuffers(){
     }
 }
 
-// Paint
+// Limpar e redesenhar
 void Display::Clear(float r, float g, float b, float a){
     glClearColor(r, g, b, a);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-// Event Handling getter
+// Apenas event handling para o OS
 bool Display::IsClosed(){
     return isClosed;
 }

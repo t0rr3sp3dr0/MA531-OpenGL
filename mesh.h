@@ -7,14 +7,14 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 
-// Dealing with the kind of data that will go through the mesh:
-// OpenGL uses x,y,z coordinates between -1.0 and 1.0
-// The bottom of the screen is y = -1.0, the top is 1.0
-// The left of the screen is x = -1.0, the right is 1.0
+// Lidando com o tipo de dados que vai passar pelo Mesh:
+// OpenGL usa coordenadas x,y,z entre -1.0 e 1.0
+// O limite inferior da tela é y = -1.0, o topo é 1.0
+// O limite esquerdo da tela é x = -1.0, o direito é 1.0
 class Vertex{
     public:
         Vertex(const glm::vec3& pos, const glm::vec2& texCoord){
-            this->pos = pos; // Setting the position for the vertex
+            this->pos = pos; // Definindo a posição do vertice
             this->texCoord = texCoord;
         }
         inline glm::vec3* GetPos() { return &pos; }
@@ -27,9 +27,9 @@ class Vertex{
 
 class Mesh {
     public:
-        // Mesh takes in a list of vertices from the triangles to be drawn
+        // Mesh faz uma lista dos vértices dos triângulos a serem desenhados
         Mesh(Vertex* vertices, unsigned int numVertices);
-        void Draw(); // Take the mesh of data and send it through the pipeline
+        void Draw(); // Pega o mesh de informações e manda pela Pipeline
         virtual ~Mesh();
     protected:
     private:
@@ -39,17 +39,16 @@ class Mesh {
         enum{
             POSITION_VB,
             TEXCOORD_VB,
-            NUM_BUFFERS // Number of pieces of information in the enum
+            NUM_BUFFERS // Quantidade de pedaços de informação no enum
         };
 
-        // vertexArrayObjects are openGL's way to refer to mesh data on the GPU
-        GLuint m_vertexArrayObject; // Getting the handle
+        // vertexArrayObjects são o jeito do openGL se referir a pedaços de informação de Mesh na GPU
+        GLuint m_vertexArrayObject; // Pegando uma referencia ao bloco em questão
 
-        // OpenGL reffers to any block of data on the GPU as a buffer
+        // OpenGL se refere a qualquer bloco de dados numa GPU como um Buffer
         GLuint m_vertexArrayBuffers[NUM_BUFFERS];
 
-        unsigned int m_drawCount; // Keeping track of how many arrayObjects we'll need to draw
-                                  // In this case, vertices
+        unsigned int m_drawCount; // Contando quantos arrayObjects precisaremos desenhar
 };
 
 

@@ -11,13 +11,13 @@
 
 class Transform {
     public:
-        // All default to nothing except the scale, which needs to default to 1, otherwise it will be null, not showing
+    // Todos com default vazio exceto a escala, que tem de ser default 1, caso contrário será nulo e não desenhará nada
         Transform(const glm::vec3& pos = glm::vec3(), const glm::vec3& rot = glm::vec3(), const glm::vec3& scale = glm::vec3(1.0f, 1.0f, 1.0f)) :
                 m_pos(pos),
                 m_rot(rot),
                 m_scale(scale) {}
 
-    // A matrix that contains the position, rotation, and scale of something is called the Model (or World) Matrix
+    // A matriz que contém a posição, rotação, e escala de algo se chama a Model (ou World) Matrix
     inline glm::mat4 GetModel() const {
         glm::mat4 posMat = Transformer::optimus(m_pos);
         glm::mat4 scaleMat = Transformer::megatron(m_scale);
@@ -25,7 +25,7 @@ class Transform {
         glm::mat4 rotX = Transformer::bumblebee(m_rot.x);
         glm::mat4 rotY = Transformer::meganFox(m_rot.y);
         glm::mat4 rotZ = Transformer::starscream(m_rot.z);
-        glm::mat4 rotMat = rotX * rotY * rotZ; // Create the final rotation matrix
+        glm::mat4 rotMat = rotX * rotY * rotZ; // Criação da matriz de rotação final
 
         return posMat * rotMat * scaleMat;
     }
@@ -35,7 +35,7 @@ class Transform {
     inline glm::vec3& GetScale() { return m_scale; }
 
     inline void SetPos(const glm::vec3& pos) { m_pos = pos; }
-    inline void SetRot(const glm::vec3& rot) { m_rot = rot; } // Vector that stores the angles for the rotation
+    inline void SetRot(const glm::vec3& rot) { m_rot = rot; } // Vetor que guarda os ângulos da rotação por eixo
     inline void SetScale(const glm::vec3& scale) { m_scale = scale; }
 
 

@@ -10,16 +10,16 @@
 
 class Camera{
     public:
-        // The position, the field of view, the window aspect ratio
-        // And the minimum/maximum distance from the camera in which an object can still be displayed
+        // A posição, o campo de visão, o aspect ratio da janela
+        // e a distancia mínima/máxima da janela para que o objeto ainda seja desenhado
         Camera(const glm::vec3& pos, float fov, float aspect, float minNear, float maxFar){
-            // The perspective matrix wasn't manually implemented in the Transformer class because
-            // it involves a lot of complicated projection math that we don't understand, so
-            // if we were to implement it we would just copy it, which is pointless
+            // Não implementei a matriz de perspective manualmente na classe Transformer porque
+            // ia envolver muita matemática complexa que não vimos ainda
+            // e não faz sentido somente copiar ela no código e pronto, daria na mesma de chamar o GLM
             m_perspective = glm::perspective(fov, aspect, minNear, maxFar);
             m_position = pos;
-            m_forward = glm::vec3(0,0,1); // Hard-coded this coordinate so the camera faces straight into the screen
-            m_up = glm::vec3(0,1,0);      // Hard-coded this coordinate so the camera is upright
+            m_forward = glm::vec3(0,0,1); // Coordenada fixada para a camera ficar de frente para a tela
+            m_up = glm::vec3(0,1,0);      // Coordenada fixada para a camera ficar sempre de cabeça para cima
         }
 
         inline glm::mat4 GetViewProjection() const {

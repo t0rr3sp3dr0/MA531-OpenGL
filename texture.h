@@ -12,8 +12,8 @@ class Texture {
     public:
         Texture(const std::string& fileName);
 
-        // Binding is the only major thing the texture needs to do
-        void Bind(unsigned int unit); // Unit because you can bind up to 32 textures at once
+        // Binding é a principal coisa que uma textura tem que fazer
+        void Bind(unsigned int unit); // Uma unidade guia porque se pode bindar até 32 texturas de uma vez
 
         virtual ~Texture();
     protected:
@@ -21,7 +21,7 @@ class Texture {
         Texture(const Texture& other) {}
         void operator = (const Texture& other) {}
 
-        GLuint m_texture; // handle for the texture
+        GLuint m_texture; // Referência para a textura
 };
 
 

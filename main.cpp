@@ -17,7 +17,7 @@ int main() {
     Shader shader("basicShader");
     Texture texture("cin.png");
     Transform transform;
-    // 70 degrees is the approx. FoV of the human eye
+    // 70 graus é o campo de visão (Field of Vision, FoV) do olho humano
     Camera camera(glm::vec3(0,0,-2), 70.f, (float)display.getWidth()/(float)display.getHeight(), 0.01f, 1000.0f);
     Vertex vertices[] = { Vertex(glm::vec3(-0.5,-0.5,0), glm::vec2(0.0,0.0)),
                           Vertex(glm::vec3(0,0.5,0), glm::vec2(0.5,1.0)),
@@ -28,7 +28,7 @@ int main() {
     Mesh mesh(vertices, sizeof(vertices)/sizeof(vertices[0]));
 
     while(!display.IsClosed()){
-        display.Clear(0.0f, 0.15f, 0.3f, 1.0f); // Paint on screen
+        display.Clear(0.0f, 0.15f, 0.3f, 1.0f); // Pintar na tela
 
         transform.GetPos().x = sinf(counter);
         transform.GetRot().x = counter * 2;
@@ -36,11 +36,12 @@ int main() {
         transform.GetRot().z = counter * 2;
         transform.SetScale(glm::vec3(abs(sinf(counter)),abs(sinf(counter)),abs(sinf(counter))));
 
-        shader.Update(transform, camera);               // Inform the transform to be multiplied, otherwise it will be null
+        // Caso a transform a ser feita não seja informada, o v. shader multiplicará a model matrix por algo nulo, e nada será desenhado
+        shader.Update(transform, camera);
         shader.Bind();
         mesh.Draw();
 
-        display.SwapBuffers();                  // Swap the buffer
+        display.SwapBuffers(); // Trocar o buffer
 
         counter += 0.0001f;
     }

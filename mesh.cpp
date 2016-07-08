@@ -6,14 +6,14 @@
 #include <vector>
 
 Mesh::Mesh(Vertex* vertices, unsigned int numVertices){
-    m_drawCount = numVertices; // we'll draw that many objects
-    glGenVertexArrays(1, &m_vertexArrayObject); // 1 as in a arrayObject with one vertex
-    glBindVertexArray(m_vertexArrayObject); // Any operation that affects a vertex array will affect this one too
+    m_drawCount = numVertices; // desenharemos esta quantidade de objetos
+    glGenVertexArrays(1, &m_vertexArrayObject); // 1 no sentido de um array object com um vertice
+    glBindVertexArray(m_vertexArrayObject); // Qualquer operação que afetar um vertex array também afetará este
 
-    std::vector<glm::vec3> positions; // Vector isolating positional data
-    std::vector<glm::vec2> texCoords; // Vector isolating texture positional data
+    std::vector<glm::vec3> positions; // Isolando as informações posicionais dos vertices
+    std::vector<glm::vec2> texCoords; // Isolando as informações posicionais das texturas
 
-    // Pre-allocating space for the vertices to increase performance
+    // Pre-alocando espaço somente por questões de performance
     positions.reserve(numVertices);
     texCoords.reserve(numVertices);
 
@@ -22,33 +22,35 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices){
         texCoords.push_back(*vertices[i].GetTexCoord());
     }
 
-    glGenBuffers(NUM_BUFFERS, m_vertexArrayBuffers); // Generates NUM_BUFFERS blocks of data that we can write on
+    // Gerando "NUM_BUFFERS" (valor inteiro) de blocos de dados (Buffers) nos quais podemos escrever
+    glGenBuffers(NUM_BUFFERS, m_vertexArrayBuffers);
 
-    // Same binding, but we tell openGL to refer to the block of data on position VB as an array
+    // Fazendo binding dos buffers, dizendo ao openGL para se referir como um array ao bloco de dados na posição VB
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[POSITION_VB]);
 
-    // Adding the data to the buffer, specifying how big it is (size of one element * n. of elements = size of array)
-    // Can't specify the size of the array directly because it's executed at runtime
-    // Static Draw means the data will never be modified. That parameter hints on how we'll use the data
+    // Adicionando dados aos buffers, especificando o seu tamanho
+    // (tamanho de um elemento vezes o numero de elementos = tamanho do array)
+    // Melhor do que dar o tamanho do array diretamente, pois ele executa em runtime
+    // Static Draw significa que não será modificado, indicando como usaremos esse dado
     glBufferData(GL_ARRAY_BUFFER, numVertices * sizeof(positions[0]), &positions[0], GL_STATIC_DRAW);
 
-    // Assigning the buffer's attributes to the GPU. In this case, the Vertex attributes:
-    // Since the checking is line per line, all the attributes need to be specified as if it were all a big "list"
-    // After all, the data comes in as a stream of bits all in a sequence
-    glEnableVertexAttribArray(0); // Tell openGL to read attributes as an array and confirms position 0 exists
+    // Determinando os atributos deste buffer na GPU. Neste caso, os atributos do vértice:
+    // Já que a checagem é feita linha por linha, todos os atributos precisam ser especificados como se fosse uma lista
+    // Afinal os dados vêm em uma grande sequência de bits
+    glEnableVertexAttribArray(0); // Fala para o openGL ler como um array e confirma que a posição zero existe
 
-    // Position 0, 3 pieces of data (vector 3 = x,y,z), data is float, set normalization to false
-    // Needs to skip 0 attributes to get to the next of this type
-    // Needs to start at position 0 for the first of this kind
+    // Posição 0. Três pedaços de informação (vetor de 3 = x,y,z). Tipo de dado é float. Normalização falsa.
+    // Precisa pular 0 atributos para chegar no primeiro deste tipo
+    // Precisa começar na posição 0 para o primeiro deste tipo
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-    //Same for Texture Coordinates
+    // Mesma coisa para coordenadas de textura
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[TEXCOORD_VB]);
     glBufferData(GL_ARRAY_BUFFER, numVertices * sizeof(texCoords[0]), &texCoords[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(1); // Position one
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0); // 2 pieces of data, X and Y on the 2D texture
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0); // 2 pedaços de informação: o X e o Y na textura (que é 2D)
 
-    glBindVertexArray(0); // Operations stop affecting any vertex array previously binded
+    glBindVertexArray(0); // Com esta linha as operações param de afetar vertices previamentes bindados
 
 }
 
@@ -60,8 +62,9 @@ Mesh::~Mesh(){
 void Mesh::Draw() { // Bind > Draw > Unbind
     glBindVertexArray(m_vertexArrayObject);
 
-    // Mode (as GL_TRIANGLES) is just the variations of a triangle (including points and lines)
-    // start at 0 for the beginning of the array, stop at m_drawCount to draw everything, since it ends there
+    // O modo GL_TRIANGLES indica que serão desenhadas variações de triângulos (incluíndo pontos e linhas)
+    // Começa no 0 (indicando começo do array), e para no m_drawCount, que é o fim do array.
+    // Assim garantimos que tudo será desenhado.
     glDrawArrays(GL_TRIANGLES, 0, m_drawCount);
 
     glBindVertexArray(0);
