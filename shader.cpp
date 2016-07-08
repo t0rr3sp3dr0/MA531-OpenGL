@@ -30,6 +30,8 @@ Shader::Shader(const std::string& fileName) {
     glValidateProgram(m_program);
     CheckShaderError(m_program, GL_VALIDATE_STATUS, true, "Error: Program invalid");
 
+    m_uniforms[TRANSFORM_U] = glGetUniformLocation(m_program, "transform"); // Gaining access to the uniform
+
 }
 
 Shader::~Shader() {
@@ -43,6 +45,19 @@ Shader::~Shader() {
 
 void Shader::Bind() {
     glUseProgram(m_program); // Specifying the handle program for the shaders
+}
+
+void Shader::Update(const Transform &transform) {
+
+    // Taking the model (or world) matrix
+    glm::mat4 model = transform.GetModel();
+
+    // An openGL uniform of Matrix 4x4 floating point values
+    // Specify the object, the amount, and TRUE/FALSE to transpose the matrix or not
+    // Finally the address of the first element of the model matrix, that yields the address of the matrix
+    glUniformMatrix4fv(m_uniforms[TRANSFORM_U], 1, GL_TRUE, &model[0][0]);
+
+    // It's very cheap in memory terms to use this uniform like that, for it serves for all vertices
 }
 
 static GLuint CreateShader(const std::string& text, GLenum shaderType){
