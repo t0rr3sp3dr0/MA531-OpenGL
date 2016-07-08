@@ -38,7 +38,7 @@ int main() {
 
         display.SwapBuffers();                  // Swap the buffer
 
-        counter += 0.01f;
+        counter += 0.0001f;
     }
 
     return 0;

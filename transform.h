@@ -20,11 +20,11 @@ class Transform {
     // A matrix that contains the position, rotation, and scale of something is called the Model (or World) Matrix
     inline glm::mat4 GetModel() const {
         glm::mat4 posMat = Transformer::optimus(m_pos);
-        glm::mat4 scaleMat = glm::scale(m_scale);
+        glm::mat4 scaleMat = Transformer::megatron(m_scale);
 
-        glm::mat4 rotX = glm::rotate(m_rot.x, glm::vec3(1.0f, 0.0f, 0.0f));
-        glm::mat4 rotY = glm::rotate(m_rot.y, glm::vec3(0.0f, 1.0f, 0.0f));
-        glm::mat4 rotZ = glm::rotate(m_rot.z, glm::vec3(0.0f, 0.0f, 1.0f));
+        glm::mat4 rotX = Transformer::bumblebee(m_rot.x);
+        glm::mat4 rotY = Transformer::meganFox(m_rot.y);
+        glm::mat4 rotZ = Transformer::starscream(m_rot.z);
         glm::mat4 rotMat = rotX * rotY * rotZ; // Create the final rotation matrix
 
         return posMat * rotMat * scaleMat;
@@ -35,7 +35,7 @@ class Transform {
     inline glm::vec3& GetScale() { return m_scale; }
 
     inline void SetPos(const glm::vec3& pos) { m_pos = pos; }
-    inline void SetRot(const glm::vec3& rot) { m_rot = rot; }
+    inline void SetRot(const glm::vec3& rot) { m_rot = rot; } // Vector that stores the angles for the rotation
     inline void SetScale(const glm::vec3& scale) { m_scale = scale; }
 
 

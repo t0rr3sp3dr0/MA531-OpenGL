@@ -53,6 +53,12 @@ class Transformer {
 
         static glm::mat4 bumblebee(float angle) // Rotate X
         {
+            // Example of what it looks like:
+            //      1    0           0       0
+            //      0 cos(angle) -sin(angle) 0
+            //      0    0           1       0
+            //      0    0           0       1
+
             // Populating the rotation matrix:
             float elements[16]; // First row
             elements[0] = 1;
@@ -78,8 +84,14 @@ class Transformer {
             return glm::make_mat4(elements);
 
         }
-        static glm::mat4 meganfox(float angle)  // Rotate Y
+        static glm::mat4 meganFox(float angle)  // Rotate Y
         {
+            // Example of what it looks like:
+            //      cos(angle)  0  sin(angle) 0
+            //          0       1      0      0
+            //      -sin(angle) 0  cos(angle) 0
+            //          0       0      0      1
+
             // Populating the rotation matrix:
             float elements[16];
             elements[0] = cosf(angle); // First row
@@ -106,6 +118,12 @@ class Transformer {
         }
         static glm::mat4 starscream(float angle) // Rotate Z
         {
+            // Example of what it looks like:
+            //      cos(angle) -sin(angle) 0 0
+            //      sin(angle) cos(angle)  0 0
+            //          0           0      1 0
+            //          0           0      0 1
+
             // Populating the rotation matrix:
             float elements[16]; // First row
             elements[0] = cosf(angle);
@@ -134,7 +152,7 @@ class Transformer {
         {
             float x = vec3.x;
             float y = vec3.y;
-            float z = vec.z;
+            float z = vec3.z;
 
             // Example of what it looks like:
             // X 0 0 0
@@ -171,4 +189,4 @@ class Transformer {
     private:
 };
 
-#endif //AVLC_MATRIX4_H
+#endif //AVLC_TRANSFORMER_H
