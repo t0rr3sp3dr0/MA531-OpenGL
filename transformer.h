@@ -2,8 +2,8 @@
 // Created by michiles on 08/07/16.
 //
 
-#ifndef AVLC_MATRIX4_H
-#define AVLC_MATRIX4_H
+#ifndef AVLC_TRANSFORMER_H
+#define AVLC_TRANSFORMER_H
 
 
 #include <glm/vec4.hpp>
@@ -51,9 +51,85 @@ class Transformer {
             return glm::make_mat4(elements);
         }
 
-        static glm::mat3 bumblebee(glm::vec3 vec3);  // Rotate X
-        static glm::mat3 ironhide(glm::vec3 vec3);   // Rotate Y
-        static glm::mat3 starscream(glm::vec3 vec3); // Rotate Z
+        static glm::mat4 bumblebee(float angle) // Rotate X
+        {
+            // Populating the rotation matrix:
+            float elements[16]; // First row
+            elements[0] = 1;
+            elements[1] = 0;
+            elements[2] = 0;
+            elements[3] = x;
+
+            elements[4] = 0; // Second row
+            elements[5] = cosf(angle);
+            elements[6] = -sinf(angle);
+            elements[7] = 0;
+
+            elements[8] = 0; // Third row
+            elements[9] = sinf(angle);
+            elements[10] = cosf(angle);
+            elements[11] = 0;
+
+            elements[12] = 0; // Fourth row
+            elements[13] = 0;
+            elements[14] = 0;
+            elements[15] = 1;
+
+            return glm::make_mat4(elements);
+
+        }
+        static glm::mat4 ironhide(float angle)  // Rotate Y
+        {
+            // Populating the rotation matrix:
+            float elements[16];
+            elements[0] = cosf(angle); // First row
+            elements[1] = 0;
+            elements[2] = sinf(angle);
+            elements[3] = 0;
+
+            elements[4] = 0; // Second row
+            elements[5] = 1;
+            elements[6] = 0;
+            elements[7] = 0;
+
+            elements[8] = -sinf(angle); // Third row
+            elements[9] = 0;
+            elements[10] = cosf(angle);
+            elements[11] = 0;
+
+            elements[12] = 0; // Fourth row
+            elements[13] = 0;
+            elements[14] = 0;
+            elements[15] = 1;
+
+            return glm::make_mat4(elements);
+        }
+        static glm::mat4 starscream(float angle) // Rotate Z
+        {
+            // Populating the rotation matrix:
+            float elements[16]; // First row
+            elements[0] = cosf(angle);
+            elements[1] = -sinf(angle);
+            elements[2] = 0;
+            elements[3] = 0;
+
+            elements[4] = sinf(angle); // Second row
+            elements[5] = cosf(angle);
+            elements[6] = 0;
+            elements[7] = 0;
+
+            elements[8] = 0; // Third row
+            elements[9] = 0;
+            elements[10] = 1;
+            elements[11] = 0;
+
+            elements[12] = 0; // Fourth row
+            elements[13] = 0;
+            elements[14] = 0;
+            elements[15] = 1;
+
+            return glm::make_mat4(elements);
+        }
         static glm::mat4 megatron(glm::vec3 vec3);   // Scaling
 
     protected:

@@ -21,6 +21,7 @@ class Transform {
     inline glm::mat4 GetModel() const {
         glm::mat4 posMat = Transformer::optimus(m_pos);
         glm::mat4 scaleMat = glm::scale(m_scale);
+
         glm::mat4 rotX = glm::rotate(m_rot.x, glm::vec3(1.0f, 0.0f, 0.0f));
         glm::mat4 rotY = glm::rotate(m_rot.y, glm::vec3(0.0f, 1.0f, 0.0f));
         glm::mat4 rotZ = glm::rotate(m_rot.z, glm::vec3(0.0f, 0.0f, 1.0f));

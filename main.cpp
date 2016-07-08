@@ -31,13 +31,14 @@ int main() {
         transform.GetRot().z = counter * 2;
         transform.SetScale(glm::vec3(cosf(counter),cosf(counter),cosf(counter)));
 
+
         shader.Update(transform);               // Inform the transform to be multiplied, otherwise it will be null
         shader.Bind();
         mesh.Draw();
 
         display.SwapBuffers();                  // Swap the buffer
 
-        counter += 0.0001f;
+        counter += 0.01f;
     }
 
     return 0;
