@@ -47,10 +47,10 @@ void Shader::Bind() {
     glUseProgram(m_program); // Specifying the handle program for the shaders
 }
 
-void Shader::Update(const Transform &transform) {
+void Shader::Update(const Transform &transform, const Camera& camera) {
 
-    // Taking the model (or world) matrix
-    glm::mat4 model = transform.GetModel();
+    // Taking the model (or world) matrix (the final result has also been multiplied by the camera projection)
+    glm::mat4 model = camera.GetViewProjection() * transform.GetModel();
 
     // An openGL uniform of Matrix 4x4 floating point values
     // Specify the object, the amount, and TRUE/FALSE to transpose the matrix or not

@@ -8,12 +8,13 @@
 #include <string>
 #include <GL/glew.h>
 #include "transform.h"
+#include "camera.h"
 
 class Shader {
     public:
         Shader(const std::string& fileName);
         void Bind();
-        void Update(const Transform& transform); // Function to update ALL uniforms, can be updated later
+        void Update(const Transform& transform, const Camera& camera); // Function to update ALL uniforms, can be updated later
         virtual ~Shader();
     protected:
     private:

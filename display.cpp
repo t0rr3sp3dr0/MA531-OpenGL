@@ -9,6 +9,10 @@
 using namespace std;
 
 Display::Display(int width, int height, const string& title) {
+
+    m_width = width;
+    m_height = height;
+
     SDL_Init(SDL_INIT_EVERYTHING);
 
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8); // 8 bits allocated, or 2^8 shades of RED
