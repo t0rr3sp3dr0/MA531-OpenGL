@@ -12,10 +12,10 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <stdio.h>
 
-class Matrix4 {
+class Transformer {
 
     public:
-        static glm::mat4 translate(glm::vec3 pos) {
+        static glm::mat4 optimus(glm::vec3 pos) { // Translation
             float x = pos.x;
             float y = pos.y;
             float z = pos.z;
@@ -51,17 +51,13 @@ class Matrix4 {
             return glm::make_mat4(elements);
         }
 
-        static glm::mat3 rotateX(glm::vec3 vec3);
-        static glm::mat3 rotateY(glm::vec3 vec3);
-        static glm::mat3 rotateZ(glm::vec3 vec3);
-        static glm::mat4 deform(glm::vec3 vec3);
+        static glm::mat3 bumblebee(glm::vec3 vec3);  // Rotate X
+        static glm::mat3 ironhide(glm::vec3 vec3);   // Rotate Y
+        static glm::mat3 starscream(glm::vec3 vec3); // Rotate Z
+        static glm::mat4 megatron(glm::vec3 vec3);   // Scaling
 
     protected:
     private:
 };
-
-
-
-
 
 #endif //AVLC_MATRIX4_H

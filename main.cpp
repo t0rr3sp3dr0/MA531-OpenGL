@@ -28,6 +28,8 @@ int main() {
         display.Clear(0.0f, 0.15f, 0.3f, 1.0f); // Paint on screen
 
         transform.GetPos().x = sinf(counter);
+        transform.GetRot().z = counter * 2;
+        transform.SetScale(glm::vec3(cosf(counter),cosf(counter),cosf(counter)));
 
         shader.Update(transform);               // Inform the transform to be multiplied, otherwise it will be null
         shader.Bind();
