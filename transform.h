@@ -8,6 +8,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include "transformer.h"
+#include <glm/ext.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 class Transform {
     public:
@@ -27,7 +29,18 @@ class Transform {
         glm::mat4 rotZ = Transformer::starscream(m_rot.z);
         glm::mat4 rotMat = rotX * rotY * rotZ; // Criação da matriz de rotação final
 
-        return posMat * rotMat * scaleMat;
+        glm::mat4 finalMat = posMat * rotMat * scaleMat;
+
+        std::cout<< "Matriz de Posição/Translação: " <<std::endl;
+        std::cout<< glm::to_string(posMat)<<std::endl;
+        std::cout<< "Matriz de Rotação: " <<std::endl;
+        std::cout<< glm::to_string(rotMat)<<std::endl;
+        std::cout<<  "Matriz de Deformação: " <<std::endl;
+        std::cout<< glm::to_string(scaleMat)<<std::endl;
+        std::cout<<  "Matriz de Translação * Rotação * Deformação: " <<std::endl;
+        std::cout<< glm::to_string(finalMat)<<std::endl;
+
+        return finalMat;
     }
 
     inline glm::vec3& GetPos() { return m_pos; }
